@@ -1,5 +1,5 @@
 import { createApp } from 'vue'
-import "./style.css"
+import "./styles.scss"
 import App from './App.vue'
 import './samples/node-api'
 
