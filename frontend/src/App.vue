@@ -4,4 +4,6 @@
 
 <template>
   <MainHeader />
+
+  <router-view></router-view>
 </template>

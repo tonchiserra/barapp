@@ -5,11 +5,11 @@
 
       <nav class="main-menu">
         <ul>
-          <li><a href="" class="underline">Inicio</a></li>
-          <li><a href="" class="underline">Carta</a></li>
-          <li><a href="" class="underline">Balance</a></li>
-          <li><a href="" class="underline">Ofertas</a></li>
-          <li><a href="" class="underline">Historial</a></li>
+          <li><router-link to="/" class="underline">Inicio</router-link></li>
+          <li><router-link to="/cart" class="underline">Carta</router-link></li>
+          <li><router-link to="/balance" class="underline">Balance</router-link></li>
+          <li><router-link to="/offers" class="underline">Ofertas</router-link></li>
+          <li><router-link to="/history" class="underline">Historial</router-link></li>
         </ul>
       </nav>
     </div>
@@ -20,6 +20,11 @@
   header {
     background: #fff;
     width: 100%;
+    position: sticky;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    border-bottom: 1px solid #c4c4c4;
 
     .header-container {
       display: flex;
@@ -36,11 +41,12 @@
       }
 
       a {
-        height: 48px;
+        height: 60px;
         display: flex;
         align-items: center;
         justify-content: center;
         font-weight: 400;
+        font-size: 1.6rem;
       }
     }
   }

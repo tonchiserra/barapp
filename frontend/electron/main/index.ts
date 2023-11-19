@@ -92,7 +92,7 @@ app.on('second-instance', () => {
 
 app.on('activate', () => {
   const allWindows = BrowserWindow.getAllWindows()
-  if (allWindows.length) {
+  if (!!!allWindows.length) {
     allWindows[0].focus()
   } else {
     createWindow()
