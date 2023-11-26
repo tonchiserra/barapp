@@ -15,6 +15,7 @@
     border-radius: 5px 5px 0 5px;
     transform: translateX(20px);
     position: relative;
+    font-size: 1.4rem;
 
     &::before {
       content: '';
