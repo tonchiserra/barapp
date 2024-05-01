@@ -1,0 +1,72 @@
+[
+    {
+        "id": "1",
+        "name": "Medialuna",
+        "price": 500
+    },
+    {
+        "id": "2",
+        "name": "Alfajor",
+        "price": 300
+    },
+    {
+        "id": "3",
+        "name": "Brownie",
+        "price": 400
+    },
+    {
+        "id": "4",
+        "name": "Torta",
+        "price": 1000
+    },
+    {
+        "id": "5",
+        "name": "Galleta",
+        "price": 200
+    },
+    {
+        "id": "6",
+        "name": "Cupcake",
+        "price": 600
+    },
+    {
+        "id": "7",
+        "name": "Muffin",
+        "price": 700
+    },
+    {
+        "id": "8",
+        "name": "Donut",
+        "price": 400
+    },
+    {
+        "id": "9",
+        "name": "Churro",
+        "price": 300
+    },
+    {
+        "id": "10",
+        "name": "Torta de zanahoria",
+        "price": 800
+    },
+    {
+        "id": "11",
+        "name": "Torta de chocolate",
+        "price": 900
+    },
+    {
+        "id": "12",
+        "name": "Torta de vainilla",
+        "price": 800
+    },
+    {
+        "id": "13",
+        "name": "Torta de limón",
+        "price": 800
+    },
+    {
+        "id": "14",
+        "name": "Torta de frutilla",
+        "price": 800
+    }
+]

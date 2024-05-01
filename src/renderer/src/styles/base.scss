@@ -1,0 +1,173 @@
+html {
+  box-sizing: border-box;
+  font-family: $font-family;
+  font-size: 10px;
+  color: $text-color;
+  font-variant-numeric: lining-nums proportional-nums;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+  padding: 0;
+  margin: 0;
+  font-weight: 500;
+}
+
+body {
+  position: relative;
+  min-height: 100vh;
+  font-size: 1.6rem;
+  overflow-x: hidden;
+  background-color: $gray-color;
+  margin-bottom: 20px;
+  font-weight: 500;
+
+  .hidden {
+    display: none !important;
+  }
+
+  h1, h2, h3 {
+    font-family: $heading-font-family;
+    line-height: 1;
+  }
+
+  button:not(.no-btn), select {
+    cursor: pointer;
+    position: relative;
+    font-size: 1.6rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px 15px;
+    border-radius: 5px;
+    transition: all 300ms ease;
+    outline: none;
+    height: 38px;
+    border: none;
+    color: $white-color;
+    font-family: $heading-font-family;
+
+    &.primary {
+      background: transparent;
+      border: 1px solid $main-color;
+      color: $main-color;
+
+      &:hover {
+        background: $main-color;
+        color: $white-color;
+      }
+    }
+
+    &.secondary {
+      background: transparent;
+      border: 1px solid $second-color;
+      color: $second-color;
+        
+      &:hover {
+        background: $second-color;
+        color: $white-color;
+      }
+    }
+  }
+
+  .no-btn {
+    cursor: pointer;
+    font-size: 1.6rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 0;
+    transition: all 300ms ease;
+    outline: none;
+    height: 40px;
+    width: max-content;
+    border: none;
+    color: $border-color;
+    background-color: transparent;
+
+    svg {
+      height: 20px;
+      width: 20px;
+    }
+  }
+
+  input,
+  textarea {
+    font-size: 1.6rem;
+    outline: 1px solid transparent;
+    transition: all 300ms ease;
+    background: transparent;
+    border-radius: 5px;
+    border: none;
+    padding: 5px;
+    width: 100%;
+
+    &:focus,
+    &:hover {
+      outline: 1px solid $main-color;
+    }
+  }
+
+  label {
+    cursor: pointer;
+  }
+
+  input[type=number]::-webkit-inner-spin-button, 
+  input[type=number]::-webkit-outer-spin-button { 
+    -webkit-appearance: none; 
+    margin: 0; 
+  }
+
+  input[type=number] { 
+    -moz-appearance: textfield; 
+  }
+
+  li {
+    list-style: none;
+  }
+
+  a {
+    text-decoration: none;
+    color: $text-color;
+    position: relative;
+    transition: all 300ms ease;
+
+    &.router-link-active,
+    &:hover {
+      color: $main-color;
+    }
+  
+    &.underline::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0px;
+      height: 3px;
+      background: $main-color;
+      transition: all 300ms ease;
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
+    }
+  
+    &.underline.router-link-active:after,
+    &.underline:hover::after {
+      width: 100%;
+    }
+  
+    &[disabled] {
+      pointer-events: none;
+      opacity: .3;
+    }
+  }
+    
+  .page-width {
+    width: 100%;
+    max-width: $content-width;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+}
