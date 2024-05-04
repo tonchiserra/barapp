@@ -1,6 +1,6 @@
 // UI app colors
-$main-color: #4f9c4b;
-$second-color: #dd4040;
+$main-color: #5d6135;
+$second-color: #bc3b3b;
 $text-color: #222;
 $border-color: #c4c4c4;
 $error-color: #b80909;
@@ -18,3 +18,20 @@ $font-family: 'Raleway', sans-serif;
 $content-width: 1400px;
 $desktop-breakpoin: 1000px;
 $mobile-breakpoint: 600px;
+
+@mixin scrollbar {
+    &::-webkit-scrollbar {
+        width: 4px;
+        background-color: $border-color;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: $main-color;
+        width: 4px;
+    }
+
+    &::-webkit-scrollbar-track-piece {
+        background-color: transparent;
+        width: 12px;
+    }
+}

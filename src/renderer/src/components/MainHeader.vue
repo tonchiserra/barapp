@@ -1,7 +1,7 @@
 <template>
   <header>
     <div class="page-width header-container">
-      <h1>Barapp</h1>
+      <h1><img src="../assets/logo.png" alt="" height="40" /></h1>
 
       <nav class="main-menu">
         <ul>

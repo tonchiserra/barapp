@@ -12,7 +12,7 @@ import { computed } from 'vue';
       case 'closed':
         return 'Cerrada'
       default:
-        return 'Libre'
+        return 'No pagado'
     }
   
   })
@@ -85,8 +85,8 @@ import { computed } from 'vue';
       }
 
       &::after {
-        border-top: 12px solid $main-color;
-        border-bottom: 12px solid $main-color;
+        border-top: 14px solid $main-color;
+        border-bottom: 14px solid $main-color;
       }
     }
 
@@ -98,8 +98,8 @@ import { computed } from 'vue';
       }
 
       &::after {
-        border-top: 12px solid $border-color;
-        border-bottom: 12px solid $border-color;
+        border-top: 14px solid $border-color;
+        border-bottom: 14px solid $border-color;
       }
     }
   }

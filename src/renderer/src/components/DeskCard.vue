@@ -4,21 +4,25 @@
   import LineItem from './LineItem.vue'
   import { getCurrentInstance, ref, watch } from 'vue'
   import { Desk } from '@shared/types/Desk'
+  import { Product } from '@shared/types/Product'
   import { state, methods } from '../helpers/AppStore'
-
+  
   const props = defineProps<{ desk: Desk }>()
 
   const instance = getCurrentInstance()
   const showSearchItem = ref(false)
   const searchItemQuery = ref('')
-  const recommendedProduct = ref({ id: '', name: '', price: 0 })
+  const recommendedProducts = ref([{ id: '', name: '', price: 0 }])
   const deskTitle = ref(`#${props.desk.number} ${props.desk.name}`)
 
   watch(() => props.desk, (newDesk) => {
     deskTitle.value = `#${newDesk.number} ${newDesk.name}`
   })
 
-  const handleSearchItem = () => {
+  const handleSearchItem = (event: any) => {
+
+    if(!!event.key && (event.key !== 'Escape' && event.key !== 'Enter')) return
+
     showSearchItem.value = !showSearchItem.value
 
     setTimeout(() => {
@@ -28,34 +32,38 @@
     }, 300)
   }
 
-  const searchProduct = (event: KeyboardEvent) => {
+  const searchProducts = (event: KeyboardEvent) => {
     if(event.key === 'Enter') return
 
     let searchItemQueryHandleized = searchItemQuery.value.replace(/[#0-9\s]/g, '').toLowerCase()
     if(!!!searchItemQueryHandleized) {
-      recommendedProduct.value.name = ''
+      recommendedProducts.value = [{ id: '', name: '', price: 0 }]
       return
     }
 
-    const product = state.products.find(product => {
+    const products = state.products.filter(product => {
       let productNameHandleized = product.name.replace(/[#0-9\s]/g, '').toLowerCase()
       return productNameHandleized.includes(searchItemQueryHandleized)
     })
 
-    if(!!!product) {
-      recommendedProduct.value.name = ''
+    if(!!!products.length) {
+      recommendedProducts.value = [{ id: '', name: '', price: 0 }]
       return
     }
 
-    recommendedProduct.value = { ...product }
+    recommendedProducts.value = { ...products }
   }
 
-  const addProduct = () => {
-    if(!!!recommendedProduct.value.name) return
+  const addProduct = (recommendedProduct: Product) => {
+    if(!!!recommendedProduct.name) return
     
-    props.desk.lineItems.push({ product: recommendedProduct.value, quantity: 1 })
+    props.desk.lineItems.push({ id: `${props.desk.lineItems.length + 1}`, product: recommendedProduct, quantity: 1 })
     let updatedDesk = { id: props.desk.id, lineItems: props.desk.lineItems, state: 'no-paid' }
     methods.saveDesk(updatedDesk)
+
+    searchItemQuery.value = ''
+    showSearchItem.value = false
+    recommendedProducts.value = [{ id: '', name: '', price: 0 }]
   }
 </script>
 
@@ -70,14 +78,15 @@
       <LineItem :lineItem="lineItem" :desk="props.desk" v-for="lineItem in props.desk.lineItems" />
 
       <!-- if clicked -->
-      <form v-if="showSearchItem" @submit.prevent="addProduct">
-        <input type="text" class="item" ref="searchItemInput" v-model="searchItemQuery" @blur="handleSearchItem" @keyup="searchProduct" />
-        <span>{{ recommendedProduct.name }}</span>
-        <button type="submit" class="hidden"></button>
-      </form>
+      <div v-if="showSearchItem" class="search-modal" @keyup="handleSearchItem" @click="handleSearchItem">
+        <input type="text" class="item" ref="searchItemInput" v-model="searchItemQuery" @keyup="searchProducts" />
+        <ul class="recommended-products-list" v-if="recommendedProducts[0].name !== ''">
+          <li v-for="recommendedProduct in recommendedProducts"><button class="no-btn" @click="addProduct(recommendedProduct)">{{ recommendedProduct.name }}</button></li>
+        </ul>
+      </div>
 
       <!-- else -->
-      <button id="AddItemBtn" class="add-item-btn no-btn" v-else @click="handleSearchItem">
+      <button id="AddItemBtn" class="add-item-btn no-btn" v-else-if="props.desk.state !== 'closed'" @click="handleSearchItem">
         <IconPlus />
         <span>Agregar</span>
       </button>
@@ -123,7 +132,7 @@
       height: max-content;
 
       input {
-        font-size: 1.6rem;
+        font-size: 1.8rem;
       }
     }
 
@@ -131,15 +140,67 @@
       width: 100%;
       height: 100%;
       overflow: hidden;
+      overflow-y: auto;
       display: flex;
       flex-direction: column;
       gap: 10px;
 
+      @include scrollbar;
+
       input.item {
         outline: none;
+        background-color: $white-color;
+        max-width: 600px;
+        margin: 30dvh 20px 0;
+        font-size: 1.8rem;
+        transition: all 300ms ease;
 
         &:hover {
           border: 1px solid $main-color;
+        }
+      }
+
+      .search-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 3;
+        width: 100vw;
+        height: 100dvh;
+        background-color: rgba(0, 0, 0, 0.7);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        transition: all 300ms ease;
+      }
+
+      .recommended-products-list {
+        padding: 10px;
+        height: max-content;
+        border-radius: 5px;
+        background-color: $white-color;
+        width: 100%;
+        max-width: 600px;
+        height: max-content;
+        max-height: 400px;
+        margin: 5px 20px 0;
+        overflow-y: auto;
+        transition: all 300ms ease;
+        @include scrollbar;
+        
+        .no-btn {
+          color: $black-color;
+          width: 100%;
+          justify-content: flex-start;
+          padding: 0 10px;
+          border-radius: 5px;
+          transition: all 300ms ease;
+          font-size: 1.8rem;
+
+          &:hover {
+            background-color: $gray-color;
+          }
         }
       }
     }
@@ -153,9 +214,12 @@
       border: 1px solid $gray-color;
       border-radius: 5px;
       height: 40px;
+      min-height: 40px;
     }
 
     .add-item-btn {
+      margin-bottom: 10px;
+
       &:hover {
         color: $black-color;
       }
@@ -173,6 +237,8 @@
         align-items: center;
         justify-content: space-between;
         width: 100%;
+        font-size: 1.8rem;
+        
       }
     }
 
